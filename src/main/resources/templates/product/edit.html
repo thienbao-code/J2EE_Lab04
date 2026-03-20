@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body th:replace="~{fragments/layout :: page('Edit product', ~{::section})}">
+<section>
+    <form th:action="@{/products/edit}" th:object="${product}" method="post"
+          class="card shadow-sm p-4 mx-auto" style="max-width: 520px;">
+        <input type="hidden" th:field="*{id}">
+
+        <div class="mb-3">
+            <label for="name" class="form-label">Name:</label>
+            <input class="form-control" type="text" id="name" th:field="*{name}">
+            <div class="alert alert-warning mt-2 py-2 mb-0" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+        </div>
+        <div class="mb-3">
+            <label for="price" class="form-label">Price:</label>
+            <input class="form-control" type="number" id="price" th:field="*{price}">
+            <div class="alert alert-warning mt-2 py-2 mb-0" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+        </div>
+        <div class="mb-3" th:if="${product.image != null && !#strings.isEmpty(product.image)}">
+            <img th:src="${product.image}" alt="Current image"
+                 style="height: 120px; width: 150px; object-fit: cover;">
+        </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">Image:</label>
+            <input class="form-control" type="text" id="image" th:field="*{image}" placeholder="https://example.com/image.jpg">
+            <div class="alert alert-warning mt-2 py-2 mb-0" th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></div>
+        </div>
+        <div class="mb-3">
+            <label for="category" class="form-label">Category:</label>
+            <select class="form-select" id="category" th:field="*{category.id}">
+                <option value="">Select category</option>
+                <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+            </select>
+            <div class="alert alert-warning mt-2 py-2 mb-0" th:if="${#fields.hasErrors('category.id')}" th:errors="*{category.id}"></div>
+        </div>
+        <input type="submit" class="btn btn-success" value="Update Product">
+    </form>
+</section>
+</body>
+</html>

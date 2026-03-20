@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body th:replace="~{fragments/layout :: page('Edit category', ~{::section})}">
+<section>
+    <form th:action="@{/categories/edit}" th:object="${category}" method="post"
+          class="card shadow-sm p-4 mx-auto" style="max-width: 520px;">
+        <input type="hidden" th:field="*{id}">
+        <div class="mb-3">
+            <label for="name" class="form-label">Category Name:</label>
+            <input class="form-control" type="text" id="name" th:field="*{name}">
+            <div class="alert alert-warning mt-2 py-2 mb-0" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+        </div>
+        <input type="submit" class="btn btn-success" value="Update Category">
+    </form>
+</section>
+</body>
+</html>
